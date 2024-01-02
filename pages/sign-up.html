@@ -39,7 +39,7 @@
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
-<body class="">
+<body >
   <main class="main-content  mt-0">
     <section>
       <div class="page-header min-vh-100">
@@ -63,26 +63,26 @@
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Email</label>
-                      <input type="email" id="email" class="form-control">
+                      <input type="email" onchange=emailvalid(this.value) id="email" class="form-control">
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Phone</label>
-                      <input type="text" id="phone" class="form-control">
+                      <input type="text" onchange=checkmobno() id="phone" class="form-control">
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
-                      <input type="password" id="password" class="form-control">
+                      <input type="password" onchange=passvalid() id="password" class="form-control">
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Confirm Password</label>
-                      <input type="password" id="cpassword" class="form-control">
+                      <input type="password" onchange=passcon() id="cpassword" class="form-control">
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">OTP</label>
-                      <input type="password" id="otp" class="form-control">
+                      <input type="password" onchange=otp() onkeyup=otp1()  id="otp" class="form-control">
                     </div>
-                    <div class="text-center">
-                      <button type="button"  onclick=response()  class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign Up</button>
+                    <div id='submit' class="text-center">
+                      <a type="button" onclick=response()  class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign Up</a>
                     </div>
                   </form>
                 </div>
@@ -103,6 +103,13 @@
 
   
   <script> 
+
+function disable() {
+  alert('hiii');
+    var x = document.getElementById("submit");
+    x.style.display = "none";
+}
+
     function checkmobno() {
       var mob = $('#phone').val();
       //alert(mob);
@@ -110,7 +117,7 @@
       type:'POST',
       url:'../validation/checkmob.php',
       data:{mob:mob,
-        type:'teacher_reg'},
+        type:'admin_reg'},
       success:function(return_data) {
         if(return_data == 1){
         alert('This Number already exist in system');
@@ -123,13 +130,13 @@
   
     function emailvalid(str) {
         var email = $('#email').val();
-        //alert(email);
+        // alert(email);
         $.ajax({
           type:'POST',
           url:'../validation/emailvalid.php',
           data:{email:email,
-        type:'reg',
-        table:'teacher_reg'
+          type:'reg',
+          table:'admin_reg'
       },
           success:function(return_data) {
             if(return_data == "1"){
@@ -153,42 +160,42 @@
       }
   
     function response() {
-          var fname = $('#fname').val();
-          var lname = $('#lname').val();
+          var name = $('#name').val();
           var email = $('#email').val();
-          var phoneno = $('#phoneno').val();
+          var phoneno = $('#phone').val();
           var password = $('#password').val();
-          var department = $('#department').val();
-          var report_to = $('#report_to').val();
-      var	table='teacher_reg';
+          var	otp1 = $('#otp').val();
+          var	table='admin_reg';
+          // alert(otp);
       
-      $.ajax({
-          type:'POST',
-          url:'../sqloperations/insert_reg.php',
-          data:{fname:fname,
-        lname:lname,
-        email:email,
-        phoneno:phoneno,
-        password:password,
-        department:department,
-        report_to:report_to,
-        table:table
-      },
-          success:function(return_data) {
-        //alert(return_data);
-            if(return_data == "1"){
-              alert('Someting went wrong!!!');
-            }  else{
-              var xmlhttp = new XMLHttpRequest();
-              xmlhttp.onreadystatechange = function() {
-                  }
-                  xmlhttp.open("GET", "../email/email_base.php?q="+email+"&type=thanks&position=teacher", true);
-                  xmlhttp.send(); 
-          alert('Signed Up Successfully....');
-          window.location.href='../teacher';
-            } 
-          }
-        });
+          if(otp == otp1){
+            $.ajax({
+                type:'POST',
+                url:'../sqloperations/insert_reg.php',
+                data:{name:name,
+                email:email,
+                phoneno:phoneno,
+                password:password,
+                table:table
+            },
+                success:function(return_data) {
+              //alert(return_data);
+                  if(return_data == "1"){
+                    alert('Someting went wrong!!!');
+                  }  else{
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        }
+                        xmlhttp.open("GET", "../email/email_base.php?q="+email+"&type=thanks&position=teacher", true);
+                        xmlhttp.send(); 
+                alert('Signed Up Successfully....');
+                window.location.href='../teacher';
+                  } 
+                }
+              });
+            }else{
+                alert('Invalid OTP....');
+            }
     }
   
     </script>
@@ -209,6 +216,10 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+	<script src="../includes/js/jquery-3.3.1.min.js"></script>
+	<script src="../includes/js/jquery.steps.js"></script>
+	<script src="../includes/js/main_steps.js"></script>
+	<script src="../includes/js/validation.js"></script>
 </body>
 
 </html>
