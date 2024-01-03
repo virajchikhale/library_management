@@ -56,18 +56,18 @@
                 <form role="form" class="text-start">
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control">
+                    <input type="email" name="email"  id="email" class="form-control">
                   </div>
                   <div class="input-group input-group-outline mb-1">
                     <label class="form-label">Password</label>
-                    <input type="password" class="form-control">
+                    <input type="password" id="password" name="password" class="form-control">
                   </div>
                   
                   <p class="mt-1 text-sm text-left">
                     <a href="../pages/sign-up.html" class="text-primary text-gradient">Forgot Password?</a>
                   </p>
                   <div class="text-center">
-                    <button type="button" class="btn bg-gradient-primary w-100 my-2 mb-2">Sign in</button>
+                    <button type="button"  onclick=response() class="btn bg-gradient-primary w-100 my-2 mb-2">Sign in</button>
                   </div>
                   <p class="mt-4 text-sm text-center">
                     Don't have an account?
@@ -82,6 +82,37 @@
     </div>
   </main>
   <!--   Core JS Files   -->
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+		
+		function response() {
+        var email = $('#email').val();
+        var password = $('#password').val();
+		    var	table='admin_reg';
+		// alert(password);
+        $.ajax({
+            type:'POST',
+            url:'../sqloperations/login.php',
+            data:{email:email,
+            password:password,
+            table:table
+        },
+          success:function(return_data) {
+            // alert(return_data);
+            if(return_data == "1"){
+                alert("Incorrect Username or Password!!!");
+                $('#password').val('');
+                $('#password').focus();
+                }  else{ 
+                alert("Signed up successfully");
+                window.location.href='dashboard.php';
+              } 
+            }
+          });
+	}
+	</script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
@@ -99,6 +130,10 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+	<script src="../includes/js/jquery-3.3.1.min.js"></script>
+	<script src="../includes/js/jquery.steps.js"></script>
+	<script src="../includes/js/main_steps.js"></script>
+	<script src="../includes/js/validation.js"></script>
 </body>
 
 </html>
