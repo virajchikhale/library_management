@@ -52,7 +52,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="/add_stud.php">
+          <a class="nav-link text-white" href="add_stud.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -60,7 +60,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="/add_book.php">
+          <a class="nav-link text-white active bg-gradient-primary" href="dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -127,53 +127,52 @@
                   <div class="card">
                           <div class="card-body">
                               <div class="card-title">
-                                  <h3 class="text-center title-2">Add Student in the system</h3>
+                                  <h3 class="text-center title-2">Add Book in the System</h3>
                               </div>
                               <hr>
                               <form method="post" novalidate="novalidate">
                                 
                                   <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Roll No.</label>
-                                    <input type="text" name="roll"  id="roll" class="form-control">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control">
                                   </div>
                                   <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">En. Roll No.</label>
-                                    <input type="text" name="enroll"  id="enroll" class="form-control">
+                                    <label class="form-label">Author</label>
+                                    <input type="text" name="author" id="author" class="form-control">
                                   </div>
                                   <div class="input-group input-group-outline my-3">
-                                    <select class="form-control" id="year" name="year" onchange=selectnone(this.id)>
-                                        <option value="none">Select Your Year</option>
-                                        <option value="1">First Year</option>
-                                        <option value="2">Second Year</option>
-                                        <option value="3">Third Year</option>
-                                    </select>
+                                    <label class="form-label">Category</label>
+                                    <input type="text" name="category"  id="category" class="form-control">
                                   </div>
                                   <div class="input-group input-group-outline my-3">
-                                    <select class="form-control" id="department" name="department" onchange=selectnone(this.id)>
-                                        <option value="none">Select Your Department</option>
-                                        <option value="1">Computer</option>
-                                        <option value="2">IT</option>
-                                        <option value="3">EnTc</option>
-                                        <option value="4">Ele</option>
-                                    </select>
+                                    <label class="form-label">Publication Year</label>
+                                    <input type="text" name="publication_year"  id="publication_year" class="form-control">
                                   </div>
                                   <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Full Name</label>
-                                    <input type="text" name="name"  id="name" class="form-control">
+                                    <label class="form-label">Publisher</label>
+                                    <input type="text" name="publisher"  id="publisher" class="form-control">
                                   </div>
                                   <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Phone Number</label>
-                                    <input onchange=phonevalid() type="number" name="phone"  id="phone" class="form-control">
+                                    <label class="form-label">Available Copies</label>
+                                    <input type="number" name="available_copies"  id="available_copies" class="form-control">
                                   </div>
                                   <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Email</label>
-                                    <input onchange=emailvalid() type="email" name="email"  id="emmail" class="form-control">
+                                    <label class="form-label">Total Copies</label>
+                                    <input type="number" name="total_copies"  id="total_copies" class="form-control">
+                                  </div>
+                                  <div class="input-group input-group-outline my-3">
+                                    <label class="form-label">Shelf Number</label>
+                                    <input type="number" name="shelf"  id="shelf" class="form-control">
+                                  </div>
+                                  <div class="input-group input-group-outline my-3">
+                                    <label class="form-label">Price</label>
+                                    <input type="number" name="price"  id="price" class="form-control">
                                   </div>
                                   <div>
-                                      <button  id="payment-button" type="Submit" name="Submit" class="btn btn-lg btn-info btn-block">
-                                          <i class="fa fa-plus fa-lg"></i>&nbsp;
-                                          <span id="payment-button-amount">ADD</span>
-                                      </button>
+                                  <button  id="payment-button" type="Submit" name="Submit" class="btn btn-lg btn-info btn-block">
+                                      <i class="fa fa-plus fa-lg"></i>&nbsp;
+                                      <span id="payment-button-amount">ADD</span>
+                                  </button>
                                   </div>
                               </form>
                           </div>
@@ -289,19 +288,21 @@
 include('../includes/connection.php');
 		if(isset($_POST['Submit'])){
       $name=$_POST['name'];
-      $roll=$_POST['roll'];
-      $enroll=$_POST['enroll'];
-      $email=$_POST['email'];
-      $phone=$_POST['phone'];
-      $department=$_POST['department'];
-      $year=$_POST['year'];
+      $author=$_POST['author'];
+      $category=$_POST['category'];
+      $publication_year=$_POST['publication_year'];
+      $publisher=$_POST['publisher'];
+      $available_copies=$_POST['available_copies'];
+      $total_copies=$_POST['total_copies'];
+      $shelf=$_POST['shelf'];
+      $price=$_POST['price'];
 
-      $sqlinsert="insert into student(roll, enroll, name, phone, email, year, department) 
-      values('".$roll."' , '".$enroll."', '".$name."', '".$phone."', '".$email."', '".$year."', '".$department."')";
+      $sqlinsert="insert into books(name, author, category, publication_year, publisher, available_copies, total_copies, shelf, price) 
+      values('".$name."' , '".$author."', '".$category."', '".$publication_year."', '".$publisher."', '".$available_copies."', '".$total_copies."', '".$shelf."', '".$price."')";
       mysql_query($sqlinsert);
       
       echo "<script> alert('Signed Up Successfully....'); </script>";
-      echo "<script> window.location.href='add_student.php'; </script>";
+      echo "<script> window.location.href='add_book.php'; </script>";
                   
 		}
   // if($_POST['submit']=="submit"){
