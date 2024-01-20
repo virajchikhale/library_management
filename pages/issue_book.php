@@ -36,7 +36,9 @@
   <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
-  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>    
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -52,7 +54,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white" href="issue_book.php">
+          <a class="nav-link text-white active bg-gradient-primary" href="issue_book.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -68,7 +70,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="dashboard.php">
+          <a class="nav-link text-white" href="add_book.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -153,52 +155,36 @@
                               <div class="card-title">
                                   <h3 class="text-center title-2">Add Book in the System</h3>
                               </div>
-                              <hr>
-                              <form method="post" novalidate="novalidate">
-                                
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Author</label>
-                                    <input type="text" name="author" id="author" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Category</label>
-                                    <input type="text" name="category"  id="category" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Publication Year</label>
-                                    <input type="text" name="publication_year"  id="publication_year" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Publisher</label>
-                                    <input type="text" name="publisher"  id="publisher" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Available Copies</label>
-                                    <input type="number" name="available_copies"  id="available_copies" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Total Copies</label>
-                                    <input type="number" name="total_copies"  id="total_copies" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Shelf Number</label>
-                                    <input type="number" name="shelf"  id="shelf" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Price</label>
-                                    <input type="number" name="price"  id="price" class="form-control">
-                                  </div>
-                                  <div>
-                                  <button  id="payment-button" type="Submit" name="Submit" class="btn btn-lg btn-info btn-block">
-                                      <i class="fa fa-plus fa-lg"></i>&nbsp;
-                                      <span id="payment-button-amount">ADD</span>
-                                  </button>
-                                  </div>
-                              </form>
+                              <hr>                                
+                              <div class="input-group input-group-outline my-3">
+                                <label class="form-label">Search for Book</label>
+                                <input type="text" id="search_book" class="form-control">
+                              </div>
+                              
+                              <div class="input-group input-group-outline my-3">
+                              <select class="form-control" id="Book_search" name="book"></select>
+                              </div>
+
+                              <div class="input-group input-group-outline my-3">
+                                <label class="form-label">Search for Student</label>
+                                <input type="text" id="search_stud" class="form-control">
+                              </div>
+                              
+                              <div class="input-group input-group-outline my-3">
+                                <select class="form-control" id="Stud_search" name="student"></select>
+                              </div>
+
+                              
+                              <div class="input-group input-group-outline my-3">
+                                <label class="form-label">Issue Date</label>
+                                <input type="date" name="date" id="date" class="form-control">
+                              </div>
+
+                              <div class="input-group input-group-outline my-3">
+                                <label class="form-label">Duration</label>
+                                <input type="number" name="duration" id="duration" class="form-control" value = 7 >
+                              </div>
+                              <Button onclick=response() class="btn bg-gradient-primary w-100" type="button">Issue</Button>
                           </div>
                       </div>
                   </div>
@@ -360,6 +346,121 @@ include('../includes/connection.php');
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
+    
+    <script>
+
+      function addDaysToDate(inputDateString, daysToAdd) {
+          // Convert input string to Date object
+          var inputDate = new Date(inputDateString);
+
+          // Add specified number of days
+          inputDate.setDate(inputDate.getDate() + daysToAdd);
+
+          // Format the result as "YYYY-MM-DD"
+          var year = inputDate.getFullYear();
+          var month = ('0' + (inputDate.getMonth() + 1)).slice(-2);
+          var day = ('0' + inputDate.getDate()).slice(-2);
+
+          return year + '-' + month + '-' + day;
+      }
+
+
+
+    function response() {
+        
+        var book = $('#Book_search').val();
+        var stud = $('#Stud_search').val();
+        var issue_date = $('#date').val();
+        var duration = parseInt($('#duration').val());
+        var due_date = addDaysToDate(issue_date, duration);
+        var return_date = addDaysToDate(issue_date, duration);
+        // alert(issue_date);
+        // alert(due_date);
+
+      	$.ajax({
+            type:'POST',
+            url:'../sqloperations/issue_book.php',
+            data:{book:book,
+              stud:stud,
+              issue_date:issue_date,
+              return_date:return_date,
+              due_date:due_date
+      	},
+        success:function(return_data) {
+			// alert(return_data);
+          if(return_data == "1"){
+            alert('Someting went wrong!!!');
+          }  else{
+				alert('Book Issued....');
+			}
+	} 
+      });
+	}
+
+        $(document).ready(function(){
+            $("#search_book").on("keyup", function(){
+                var searchText = $(this).val();
+                if(searchText !== ''){
+                    $.ajax({
+                        url: '../sqloperations/search_book.php',
+                        method: 'post',
+                        data: {query: searchText},
+                        success: function(response){
+                            var books = response.split("~");
+                            var dropdown = $("#Book_search");
+                            dropdown.empty(); // Clear previous options
+                            
+                            for (var j = 0; j < books.length-1; j++) {
+                                var bookInfo = books[j].split("|");
+                                var title = bookInfo[2]; // Assuming the book title is the second part
+                                
+                                var option = $('<option/>', {
+                                    value: title,
+                                    text: bookInfo[2]+": "+bookInfo[0]
+                                });
+                                dropdown.append(option);
+                            }
+                        }
+                    });
+                } else {
+                    $("#Book_search").empty(); // Clear dropdown if no search text
+                }
+            });
+        });
+
+
+        
+        $(document).ready(function(){
+            $("#search_stud").on("keyup", function(){
+                var searchText = $(this).val();
+                if(searchText !== ''){
+                    $.ajax({
+                        url: '../sqloperations/search_stud.php',
+                        method: 'post',
+                        data: {query: searchText},
+                        success: function(response){
+                            var books = response.split("~");
+                            var dropdown = $("#Stud_search");
+                            dropdown.empty(); // Clear previous options
+                            
+                            for (var j = 0; j < books.length-1; j++) {
+                                var bookInfo = books[j].split("|");
+                                var title = bookInfo[2]; // Assuming the book title is the second part
+                                
+                                var option = $('<option/>', {
+                                    value: title,
+                                    text: bookInfo[1]+": "+bookInfo[0]
+                                });
+                                dropdown.append(option);
+                            }
+                        }
+                    });
+                } else {
+                    $("#Stud_search").empty(); // Clear dropdown if no search text
+                }
+            });
+        });
+    </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->

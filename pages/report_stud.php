@@ -68,7 +68,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="dashboard.php">
+          <a class="nav-link text-white" href="add_book.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -84,7 +84,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="report_stud.php">
+          <a class="nav-link text-white active bg-gradient-primary" href="report_book.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -151,54 +151,82 @@
                   <div class="card">
                           <div class="card-body">
                               <div class="card-title">
-                                  <h3 class="text-center title-2">Add Book in the System</h3>
+                                  <h3 class="text-center title-2">Students Present in the system</h3>
                               </div>
                               <hr>
-                              <form method="post" novalidate="novalidate">
-                                
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Author</label>
-                                    <input type="text" name="author" id="author" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Category</label>
-                                    <input type="text" name="category"  id="category" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Publication Year</label>
-                                    <input type="text" name="publication_year"  id="publication_year" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Publisher</label>
-                                    <input type="text" name="publisher"  id="publisher" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Available Copies</label>
-                                    <input type="number" name="available_copies"  id="available_copies" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Total Copies</label>
-                                    <input type="number" name="total_copies"  id="total_copies" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Shelf Number</label>
-                                    <input type="number" name="shelf"  id="shelf" class="form-control">
-                                  </div>
-                                  <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Price</label>
-                                    <input type="number" name="price"  id="price" class="form-control">
-                                  </div>
-                                  <div>
-                                  <button  id="payment-button" type="Submit" name="Submit" class="btn btn-lg btn-info btn-block">
-                                      <i class="fa fa-plus fa-lg"></i>&nbsp;
-                                      <span id="payment-button-amount">ADD</span>
-                                  </button>
-                                  </div>
-                              </form>
+                              <table class="table align-items-center mb-0">
+                                <thead>
+                                  <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Details</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Year</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
+                                    <th class="text-secondary opacity-7"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  
+                                <?php
+                                  include ('../../includes/connection.php');
+                                  $ur = mysql_fetch_array(mysql_query("select * from admin_reg where email='".$_SESSION["user"]."'"));
+                                  $res = mysql_query("select * from student");
+                                  $id = 1;
+                                  while($row = mysql_fetch_array($res))
+                                  {
+                              ?>
+                                  <tr>
+                                    <td>
+                                      <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                          <h6 class="mb-0 text-sm"><?php echo $row['name']; ?></h6>
+                                          <p class="text-xs text-secondary mb-0"><b>Roll No.:</b> <?php echo $row['roll']; ?></p>
+                                          <p class="text-xs text-secondary mb-0"><b>Enrollment No.r:</b><?php echo $row['enroll']; ?></p>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <p class="text-xs font-secondary mb-0"><b>Phone No.:</b><?php echo $row['phone']; ?></p>
+                                      <p class="text-xs text-secondary mb-0"><b>Email :</b><?php echo $row['email']; ?></p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                      <span class="text-secondary text-xs font-weight-bold">
+                                      <?php if($row['year']=='1'){
+                                        echo "First Year";
+                                      }else if($row['year']=='2'){
+                                        echo "Second Year";
+                                      }else if($row['year']=='3'){
+                                        echo "Third Year";
+                                      }else if($row['year']=='0'){
+                                        echo "Not Defiend";
+                                      } ?>
+                                    </span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                      <span class="text-secondary text-xs font-weight-bold">
+                                      <?php if($row['department']=='1'){
+                                        echo "Computer";
+                                      }else if($row['department']=='2'){
+                                        echo "Information Tecnology";
+                                      }else if($row['department']=='3'){
+                                        echo "EnTC";
+                                      }else if($row['department']=='4'){
+                                        echo "Electric";
+                                      }else if($row['department']=='0'){
+                                        echo "Not Defiend";
+                                      } ?></span>
+                                    </td>
+                                    <td class="align-middle">
+                                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                        Edit
+                                      </a>
+                                    </td>
+                                  </tr>
+
+                                <?php
+                                  $id++; }
+                                    ?>
+                                </tbody>
+                              </table>
                           </div>
                       </div>
                   </div>
