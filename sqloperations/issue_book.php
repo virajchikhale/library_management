@@ -8,7 +8,7 @@ $due_date=$_POST['due_date'];
 $return_date=$_POST['return_date'];
 
 $sqlinsert="insert into issue(book_id, stud_id, issue_date, due_date, return_date, status) 
-values('".$book."' , '".$stud."', '".$issue_date."', '".$due_date."', '".$return_date."', '0')";
+values('".$book."' , '".$stud."', '".$issue_date."', '".$due_date."', '0', '0')";
 
 $sqlinsert1="UPDATE books SET available_copies = available_copies - 1  WHERE id='".$book."'" ;
 

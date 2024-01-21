@@ -690,72 +690,7 @@ function darkMode(el) {
 
   const svg = document.querySelectorAll('g');
 
-  if (!el.getAttribute("checked")) {
-    body.classList.add('dark-version');
-    for (var i = 0; i < hr.length; i++) {
-      if (hr[i].classList.contains('dark')) {
-        hr[i].classList.remove('dark');
-        hr[i].classList.add('light');
-      }
-    }
-
-    for (var i = 0; i < hr_card.length; i++) {
-      if (hr_card[i].classList.contains('dark')) {
-        hr_card[i].classList.remove('dark');
-        hr_card[i].classList.add('light');
-      }
-    }
-    for (var i = 0; i < text_btn.length; i++) {
-      if (text_btn[i].classList.contains('text-dark')) {
-        text_btn[i].classList.remove('text-dark');
-        text_btn[i].classList.add('text-white');
-      }
-    }
-    for (var i = 0; i < text_span.length; i++) {
-      if (text_span[i].classList.contains('text-dark')) {
-        text_span[i].classList.remove('text-dark');
-        text_span[i].classList.add('text-white');
-      }
-    }
-    for (var i = 0; i < text_strong.length; i++) {
-      if (text_strong[i].classList.contains('text-dark')) {
-        text_strong[i].classList.remove('text-dark');
-        text_strong[i].classList.add('text-white');
-      }
-    }
-    for (var i = 0; i < text_nav_link.length; i++) {
-      if (text_nav_link[i].classList.contains('text-dark')) {
-        text_nav_link[i].classList.remove('text-dark');
-        text_nav_link[i].classList.add('text-white');
-      }
-    }
-    for (var i = 0; i < secondary.length; i++) {
-      if (secondary[i].classList.contains('text-secondary')) {
-        secondary[i].classList.remove('text-secondary');
-        secondary[i].classList.add('text-white');
-        secondary[i].classList.add('opacity-8');
-      }
-    }
-    for (var i = 0; i < bg_gray_100.length; i++) {
-      if (bg_gray_100[i].classList.contains('bg-gray-100')) {
-        bg_gray_100[i].classList.remove('bg-gray-100');
-        bg_gray_100[i].classList.add('bg-gray-600');
-      }
-    }
-    for (var i = 0; i < btn_text_dark.length; i++) {
-      btn_text_dark[i].classList.remove('text-dark');
-      btn_text_dark[i].classList.add('text-white');
-    }
-    for (var i = 0; i < svg.length; i++) {
-      if (svg[i].hasAttribute('fill')) {
-        svg[i].setAttribute('fill', '#fff');
-      }
-    }
-    for (var i = 0; i < card_border.length; i++) {
-      card_border[i].classList.add('border-dark');
-    }
-    el.setAttribute("checked", "true");
-  } else {
+  if (!el.getAttribute("checked")) {    
     body.classList.remove('dark-version');
     for (var i = 0; i < hr.length; i++) {
       if (hr[i].classList.contains('light')) {
@@ -821,6 +756,71 @@ function darkMode(el) {
       card_border_dark[i].classList.remove('border-dark');
     }
     el.removeAttribute("checked");
+  } else {
+    body.classList.add('dark-version');
+    for (var i = 0; i < hr.length; i++) {
+      if (hr[i].classList.contains('dark')) {
+        hr[i].classList.remove('dark');
+        hr[i].classList.add('light');
+      }
+    }
+
+    for (var i = 0; i < hr_card.length; i++) {
+      if (hr_card[i].classList.contains('dark')) {
+        hr_card[i].classList.remove('dark');
+        hr_card[i].classList.add('light');
+      }
+    }
+    for (var i = 0; i < text_btn.length; i++) {
+      if (text_btn[i].classList.contains('text-dark')) {
+        text_btn[i].classList.remove('text-dark');
+        text_btn[i].classList.add('text-white');
+      }
+    }
+    for (var i = 0; i < text_span.length; i++) {
+      if (text_span[i].classList.contains('text-dark')) {
+        text_span[i].classList.remove('text-dark');
+        text_span[i].classList.add('text-white');
+      }
+    }
+    for (var i = 0; i < text_strong.length; i++) {
+      if (text_strong[i].classList.contains('text-dark')) {
+        text_strong[i].classList.remove('text-dark');
+        text_strong[i].classList.add('text-white');
+      }
+    }
+    for (var i = 0; i < text_nav_link.length; i++) {
+      if (text_nav_link[i].classList.contains('text-dark')) {
+        text_nav_link[i].classList.remove('text-dark');
+        text_nav_link[i].classList.add('text-white');
+      }
+    }
+    for (var i = 0; i < secondary.length; i++) {
+      if (secondary[i].classList.contains('text-secondary')) {
+        secondary[i].classList.remove('text-secondary');
+        secondary[i].classList.add('text-white');
+        secondary[i].classList.add('opacity-8');
+      }
+    }
+    for (var i = 0; i < bg_gray_100.length; i++) {
+      if (bg_gray_100[i].classList.contains('bg-gray-100')) {
+        bg_gray_100[i].classList.remove('bg-gray-100');
+        bg_gray_100[i].classList.add('bg-gray-600');
+      }
+    }
+    for (var i = 0; i < btn_text_dark.length; i++) {
+      btn_text_dark[i].classList.remove('text-dark');
+      btn_text_dark[i].classList.add('text-white');
+    }
+    for (var i = 0; i < svg.length; i++) {
+      if (svg[i].hasAttribute('fill')) {
+        svg[i].setAttribute('fill', '#fff');
+      }
+    }
+    for (var i = 0; i < card_border.length; i++) {
+      card_border[i].classList.add('border-dark');
+    }
+    el.setAttribute("checked", "true");
   }
 };
 

@@ -60,7 +60,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="report_issue.php">
+          <a class="nav-link text-white  active bg-gradient-primary" href="report_issue.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -84,7 +84,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="report_book.php">
+          <a class="nav-link text-white" href="report_book.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -165,10 +165,12 @@
                               <table class="table align-items-center mb-0">
                                 <thead>
                                   <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Info</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Book Info</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dates</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delay</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fine</th>
+                                    <th class="text-secondary opacity-7"></th>
                                     <th class="text-secondary opacity-7"></th>
                                   </tr>
                                 </thead>
@@ -177,43 +179,90 @@
                                 <?php
                                   include ('../../includes/connection.php');
                                   $ur = mysql_fetch_array(mysql_query("select * from admin_reg where email='".$_SESSION["user"]."'"));
-                                  $res = mysql_query("select * from books");
+                                  $res = mysql_query("select * from issue where status='0'");
                                   $id = 1;
                                   while($row = mysql_fetch_array($res))
                                   {
+                                    $book = mysql_query("select * from books where id = '".$row['book_id']."'");
+                                    $book1 = mysql_fetch_array($book);
+                                    $stud = mysql_query("select * from student where id = '".$row['stud_id']."'");
+                                    $stud1 = mysql_fetch_array($stud);
+
                               ?>
                                   <tr>
                                     <td>
+                                      <p class="text-xs font-secondary mb-0"><b>Enrollment No.: </b><?php echo $stud1['enroll']; ?></p>
+                                      <p class="text-xs text-secondary mb-0"><b>Student Name: </b><?php echo $stud1['name']; ?></p>
+                                    </td>
+                                    <td>
                                       <div class="d-flex px-2 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                          <h6 class="mb-0 text-sm"><?php echo $row['name']; ?></h6>
-                                          <p class="text-xs text-secondary mb-0"><b>Publisher:</b> <?php echo $row['publisher']; ?></p>
-                                          <p class="text-xs text-secondary mb-0"><b>Publication Year:</b><?php echo $row['publication_year']; ?></p>
+                                          <h6 class="mb-0 text-sm"><?php echo $book1['name']; ?></h6>
+                                          <p class="text-xs text-secondary mb-0"><b>Book ID:</b> <?php echo $book1['id']; ?></p>
+                                          <p class="text-xs text-secondary mb-0"><b>Author:</b><?php echo $book1['author']; ?></p>
                                         </div>
                                       </div>
                                     </td>
                                     <td>
-                                      <p class="text-xs font-secondary mb-0"><b>Author:</b><?php echo $row['author']; ?></p>
-                                      <p class="text-xs text-secondary mb-0"><b>Category :</b><?php echo $row['category']; ?></p>
+                                      <p class="text-xs font-secondary mb-0"><b>Issue Date: </b><?php echo $row['issue_date']; ?></p>
+                                      <p class="text-xs text-secondary mb-0"><b>Due Date: </b><?php echo $row['due_date']; ?></p>
                                     </td>
                                     <td class="align-middle text-center">
-                                      <span class="text-secondary text-xs font-weight-bold"><?php echo $row['total_copies']; ?></span>
+                                      <span class="text-secondary text-xs font-weight-bold">
+                                      <?php
+
+                                        $datetime1 = new DateTime($row['due_date']);
+                                        $datetime2 = new DateTime(date("Y-m-d"));
+
+                                        if ($datetime2 >= $datetime1) {
+                                        $interval = $datetime1->diff($datetime2);
+                                        $daysDifference = max(0, $interval->days);
+                                        echo "<p class='text-danger text-sm font-weight-bold'>".$daysDifference . " Days<p>";
+                                      } else {
+                                        // $date2 has passed $date1, so the difference is 0
+                                        $daysDifference = 0;
+                                        echo "<p class='text-success text-sm font-weight-bold'>0 days<p>";
+                                    }
+
+                                    $fine = $daysDifference*5
+                                        ?>
+                                    
+                                    </span>
                                     </td>
                                     <td class="align-middle text-center">
-                                      <span class="text-success text-xs font-weight-bold"><?php echo $row['available_copies']; ?></span>
+                                      <span class="text-info text-xs font-weight-bold">Rs. <?php echo $fine; ?></span>
                                     </td>
                                     <td class="align-middle">
-                                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                        Edit
+                                    <?php
+                                      if($row['status']=='0'){
+                                    ?>
+                                      <a href="javascript:;" class="text-success font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                        Renew
                                       </a>
+                                      <?php } else { ?>
+                                      <a class="text-danger font-weight-bold text-xs">
+                                        Returned
+                                      </a>
+                                      <?php } ?>
+                                    </td>
+                                    <td class="align-middle">
+                                      
+                                    <?php
+                                      if($row['status']=='0'){
+                                    ?>
+                                      <a href="javascript:;" class="text-warning font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                        return
+                                      </a>
+                                      <?php } else { ?>
+                                      <a class="text-danger font-weight-bold text-xs">
+                                        Returned
+                                      </a>
+                                      <?php } ?>
                                     </td>
                                   </tr>
-
-
-                                  
-<?php
+                                  <?php
                                   $id++; }
-    ?>
+                                      ?>
                                 </tbody>
                               </table>
                           </div>
