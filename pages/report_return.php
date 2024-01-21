@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Issue Report
+    Return Report
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -79,7 +79,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="report_issue.php">
+          <a class="nav-link text-white" href="report_issue.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <span class="material-symbols-outlined">lab_profile</span>
             </div>
@@ -87,7 +87,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="report_return.php">
+          <a class="nav-link text-white active bg-gradient-primary" href="report_return.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <span class="material-symbols-outlined">lab_profile</span>
             </div>
@@ -130,9 +130,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Issue Report</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Return Report</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Issue Report</h6>
+          <h6 class="font-weight-bolder mb-0">Return Report</h6>
         </nav>
       </div>
     </nav>
@@ -148,7 +148,7 @@
                   <div class="card">
                           <div class="card-body">
                               <div class="card-title">
-                                  <h3 class="text-center title-2">Books Issued by the Students</h3>
+                                  <h3 class="text-center title-2">Books Returned by the Students</h3>
                               </div>
                               <hr>
                               <table class="table align-items-center mb-0">
@@ -159,8 +159,6 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dates</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delay</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fine</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Renew</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Return</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -168,7 +166,7 @@
                                 <?php
                                   include ('../../includes/connection.php');
                                   $ur = mysql_fetch_array(mysql_query("select * from admin_reg where email='".$_SESSION["user"]."'"));
-                                  $res = mysql_query("select * from issue where status='0'");
+                                  $res = mysql_query("select * from issue where status='1'");
                                   $id = 1;
                                   while($row = mysql_fetch_array($res))
                                   {
@@ -195,13 +193,14 @@
                                     <td>
                                       <p class="text-xs font-secondary mb-0"><b>Issue Date: </b><?php echo $row['issue_date']; ?></p>
                                       <p class="text-xs text-secondary mb-0"><b>Due Date: </b><?php echo $row['due_date']; ?></p>
+                                      <p class="text-xs text-secondary mb-0"><b>Return Date: </b><?php echo $row['return_date']; ?></p>
                                     </td>
                                     <td class="align-middle text-center">
                                       <span class="text-secondary text-xs font-weight-bold">
                                       <?php
 
                                         $datetime1 = new DateTime($row['due_date']);
-                                        $datetime2 = new DateTime(date("Y-m-d"));
+                                        $datetime2 = new DateTime($row['return_date']);
 
                                         if ($datetime2 >= $datetime1) {
                                         $interval = $datetime1->diff($datetime2);
@@ -221,16 +220,6 @@
                                     <td class="align-middle text-center">
                                       <span class="text-info text-xs font-weight-bold">Rs. <?php echo $fine; ?></span>
                                     </td>
-                                    <td class="align-middle">
-                                      <a href="javascript:;" class="text-success font-weight-bold text-xs" style="margin-left:40%;" data-toggle="tooltip" data-original-title="Edit user">
-                                      <span class="material-symbols-outlined">autorenew</span>
-                                      </a>
-                                    </td>
-                                    <td class="align-middle">
-                                      <a href="javascript:;" class="text-warning font-weight-bold text-xs" style="margin-left:40%;" data-toggle="tooltip" data-original-title="Edit user">
-                                        <span class="material-symbols-outlined">laps</span>
-                                      </a>
-                                  </tr>
                                   <?php
                                   $id++; }
                                       ?>
@@ -245,9 +234,8 @@
 
       <?php include('footer.php');?>
   </main>
-  
-<?php
 
+  <?php
 		if(isset($_POST['sign'])){
       session_destroy();
       
