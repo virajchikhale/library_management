@@ -212,7 +212,7 @@
                                         echo "<p class='text-success text-sm font-weight-bold'>0 days<p>";
                                     }
 
-                                    $fine = $daysDifference*5
+                                    $fine = $daysDifference*$row['fine']
                                         ?>
                                     
                                     </span>

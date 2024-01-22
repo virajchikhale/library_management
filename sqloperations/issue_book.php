@@ -5,7 +5,6 @@ $book=$_POST['book'];
 $stud=$_POST['stud'];
 $issue_date=$_POST['issue_date'];
 $due_date=$_POST['due_date'];
-$return_date=$_POST['return_date'];
 
 $sqlinsert="insert into issue(book_id, stud_id, issue_date, due_date, return_date, status) 
 values('".$book."' , '".$stud."', '".$issue_date."', '".$due_date."', '0', '0')";

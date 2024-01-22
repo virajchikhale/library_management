@@ -39,7 +39,18 @@
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -158,7 +169,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Book Info</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dates</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delay</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fine</th>
+                                    <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fine</th> -->
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Renew</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Return</th>
                                   </tr>
@@ -218,19 +229,206 @@
                                     
                                     </span>
                                     </td>
-                                    <td class="align-middle text-center">
+                                    <!-- <td class="align-middle text-center">
                                       <span class="text-info text-xs font-weight-bold">Rs. <?php echo $fine; ?></span>
-                                    </td>
+                                    </td> -->
                                     <td class="align-middle">
-                                      <a href="javascript:;" class="text-success font-weight-bold text-xs" style="margin-left:40%;" data-toggle="tooltip" data-original-title="Edit user">
+                                      <a data-toggle="modal" data-target="#renewModal_<?php echo $row['id'];?>"  class="text-success font-weight-bold text-xs" style="margin-left:40%;" data-toggle="tooltip" data-original-title="Edit user">
                                       <span class="material-symbols-outlined">autorenew</span>
                                       </a>
                                     </td>
                                     <td class="align-middle">
-                                      <a href="javascript:;" class="text-warning font-weight-bold text-xs" style="margin-left:40%;" data-toggle="tooltip" data-original-title="Edit user">
+                                       <a data-toggle="modal" data-target="#returnModal_<?php echo $row['id'];?>" class="text-warning font-weight-bold text-xs" style="margin-left:40%;" data-toggle="tooltip" data-original-title="Edit user">
                                         <span class="material-symbols-outlined">laps</span>
                                       </a>
                                   </tr>
+
+                                  <!-- update model -->
+                                  <div class="modal fade" id="returnModal_<?php echo $row['id'];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                      
+                                      <?php  $query1="SELECT * FROM issue where id='".$row['id']."' ";
+                                          $query_run2=mysql_query($query1);
+                                          $results = mysql_fetch_array($query_run2);
+                                          //echo $results['keyword']; 
+                                          // echo $results['question']; 					  
+                                      ?>
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h5 class="modal-title" id="exampleModalLongTitle">Book To Be Returned</h5>
+                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                              </div>
+                                          
+                                              <div class="modal-body">
+                                                  <form  method="POST" enctype="multipart/form-data">
+                                          
+                                                      <div class="form-group mb-3">
+                                                        <h6 class="font-weight-bolder mb-0">ID: <?php echo $results['id']; ?></h6>
+                                                        <div class="input-group input-group-outline my-3">
+                                                          <label class="form-label">Fine to be take for single day</label><input type="text" id="amount_<?php echo $results['id']; ?>" class="form-control" value="2">
+                                                          <input type="hidden" id="days_<?php echo $results['id']; ?>" class="form-control" value="<?php echo $daysDifference;?>">
+                                                        </div> 
+                                                      </div>
+                                                      <h6 class="font-weight-bolder mb-0 text-danger" id="result_<?php echo $results['id']; ?>"></h6>
+                                                      <div class="form-group mb-3">
+                                                      <button type="button" id="cala_<?php echo $results['id']; ?>" onclick="cal_<?php echo $results['id']; ?>()" class="btn btn-warning">Calculet</button>
+                                                      <a type="button" id="update_<?php echo $results['id']; ?>" onclick="returned_<?php echo $results['id']; ?>()" class="btn btn-success hidden">update</a>
+                                                      </div>
+
+                                                  </form>
+                                              </div> 
+                                          </div>
+                                      </div>
+                                  </div>
+
+
+                                  
+                                  <!-- update model -->
+                                  <div class="modal fade" id="renewModal_<?php echo $row['id'];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                      
+                                      <?php  $query1="SELECT * FROM issue where id='".$row['id']."' ";
+                                          $query_run2=mysql_query($query1);
+                                          $results = mysql_fetch_array($query_run2);
+                                          //echo $results['keyword']; 
+                                          // echo $results['question']; 					  
+                                      ?>
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h5 class="modal-title" id="exampleModalLongTitle">Book To Be Returned</h5>
+                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                              </div>
+                                          
+                                              <div class="modal-body">
+                                                  <form  method="POST" enctype="multipart/form-data">
+                                          
+                                                      <div class="form-group mb-3">
+                                                        <h6 class="font-weight-bolder mb-0">ID: <?php echo $results['id']; ?></h6>
+                                                        <div class="input-group input-group-outline my-3">
+                                                          <label class="form-label">Fine to be take for single day</label><input type="text" id="amount_1_<?php echo $results['id']; ?>" class="form-control" value="2">
+                                                          <input type="hidden" id="days_1_<?php echo $results['id']; ?>" class="form-control" value="<?php echo $daysDifference;?>">
+                                                        </div> 
+                                                      </div>
+                                                      <h6 class="font-weight-bolder mb-0 text-danger" id="result_1_<?php echo $results['id']; ?>"></h6>
+                                                      <div class="form-group mb-3">
+                                                      <button type="button" id="cala_1_<?php echo $results['id']; ?>" onclick="cal_1_<?php echo $results['id']; ?>()" class="btn btn-warning">Calculet</button>
+                                                      <a type="button" id="update_1_<?php echo $results['id']; ?>" onclick="renew_<?php echo $results['id']; ?>()" class="btn btn-success hidden">update</a>
+                                                      </div>
+
+                                                  </form>
+                                              </div> 
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <script>
+                                    function cal_1_<?php echo $results['id']; ?>(){
+                                      var amount = $('#amount_1_<?php echo $results['id']; ?>').val();
+                                      var days = $('#days_1_<?php echo $results['id']; ?>').val();
+                                      document.getElementById("result_1_<?php echo $results['id']; ?>").innerText = "Fine: Rs. " + (amount*days);
+                                      document.getElementById("update_1_<?php echo $results['id']; ?>").classList.remove("hidden");
+                                      document.getElementById("cala_1_<?php echo $results['id']; ?>").classList.add("hidden");
+                                    }
+
+                                    
+
+                                    function renew_<?php echo $results['id']; ?>() {
+
+                                            var today = new Date();
+                                            var year = today.getFullYear();
+                                            var month = today.getMonth() + 1; // Note: Months are zero-based, so we add 1
+                                            var day = today.getDate();
+                                            var formattedDate = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+
+                                            
+                                            var book_id = <?php echo $results['id']; ?>;
+                                            var book = <?php echo $results['book_id']; ?>;
+                                            var stud = <?php echo $results['stud_id']; ?>;
+                                            var issue_date = formattedDate;
+                                            var duration = 7;
+                                            var due_date = addDaysToDate(issue_date, duration);
+                                            var amount = $('#amount_<?php echo $results['id']; ?>').val();
+                                            // alert(issue_date);
+                                            // alert(due_date);
+
+
+                                            
+                                            $.ajax({
+                                                type:'POST',
+                                                url:'../sqloperations/issue_book.php',
+                                                data:{book:book,
+                                                  stud:stud,
+                                                  issue_date:issue_date,
+                                                  due_date:due_date
+                                            },
+                                            success:function(return_data) {
+                                          // alert(return_data);
+                                              if(return_data == "1"){
+                                                alert('Someting went wrong!!!');
+                                              }  else{
+                                            // alert('Book Issued....');
+                                          }
+                                      } 
+                                          });
+
+                                            $.ajax({
+                                                type:'POST',
+                                                url:'../sqloperations/return_book.php',
+                                                data:{book_id:book_id,
+                                                  book:book,
+                                                  amount:amount
+                                            },
+                                            success:function(return_data) {
+                                          // alert(return_data);
+                                              if(return_data == "1"){
+                                                alert('Someting went wrong!!!');
+                                              }  else{
+                                            alert('Book Renewed....');
+                                            window.location.href="report_issue.php";
+                                          }
+                                      } 
+                                          });
+                                          
+                                      }
+
+
+                                      
+                                    
+                                    
+                                      function returned_<?php echo $results['id']; ?>() {
+                                            
+                                            var book_id = <?php echo $results['id']; ?>;
+                                            var book = <?php echo $results['book_id']; ?>;
+                                            var amount = $('#amount_<?php echo $results['id']; ?>').val();
+                                            // alert(book_id);
+                                            // alert(date);
+
+                                            $.ajax({
+                                                type:'POST',
+                                                url:'../sqloperations/return_book.php',
+                                                data:{book_id:book_id,
+                                                  book:book,
+                                                  amount:amount
+                                            },
+                                            success:function(return_data) {
+                                          // alert(return_data);
+                                              if(return_data == "1"){
+                                                alert('Someting went wrong!!!');
+                                              }  else{
+                                            alert('Book Returned....');
+                                            window.location.href="report_issue.php";
+                                          }
+                                      } 
+                                          });
+                                          
+                                      }
+
+                                  </script>
+
                                   <?php
                                   $id++; }
                                       ?>
@@ -266,6 +464,22 @@
   
   <script src="vendor/jquery-3.2.1.min.js"></script>
   <script>
+
+  function addDaysToDate(inputDateString, daysToAdd) {
+            // Convert input string to Date object
+            var inputDate = new Date(inputDateString);
+
+            // Add specified number of days
+            inputDate.setDate(inputDate.getDate() + daysToAdd);
+
+            // Format the result as "YYYY-MM-DD"
+            var year = inputDate.getFullYear();
+            var month = ('0' + (inputDate.getMonth() + 1)).slice(-2);
+            var day = ('0' + inputDate.getDate()).slice(-2);
+
+            return year + '-' + month + '-' + day;
+        }
+
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {

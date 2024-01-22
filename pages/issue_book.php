@@ -265,6 +265,7 @@
             alert('Someting went wrong!!!');
           }  else{
 				alert('Book Issued....');
+        window.location.href="issue_book.php";
 			}
 	} 
       });
