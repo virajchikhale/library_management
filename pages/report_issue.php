@@ -173,6 +173,7 @@
                               <table class="table align-items-center mb-0">
                                 <thead>
                                   <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Record ID</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Info</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Book Info</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dates</th>
@@ -198,6 +199,9 @@
 
                               ?>
                                   <tr>
+                                    <td>
+                                      <p class="text-xs font-secondary mb-0"><?php echo $row['id']; ?></p>
+                                    </td>
                                     <td>
                                       <p class="text-xs font-secondary mb-0"><b>Enrollment No.: </b><?php echo $stud1['enroll']; ?></p>
                                       <p class="text-xs text-secondary mb-0"><b>Student Name: </b><?php echo $stud1['name']; ?></p>
