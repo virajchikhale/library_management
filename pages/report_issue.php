@@ -90,6 +90,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-white" href="search_stud.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <span class="material-symbols-outlined">search</span>
+            </div>
+            <span class="nav-link-text ms-1">Search Record</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-white active bg-gradient-primary" href="report_issue.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <span class="material-symbols-outlined">lab_profile</span>
@@ -267,13 +275,13 @@
                                                       <div class="form-group mb-3">
                                                         <h6 class="font-weight-bolder mb-0">ID: <?php echo $results['id']; ?></h6>
                                                         <div class="input-group input-group-outline my-3">
-                                                          <label class="form-label">Fine to be take for single day</label><input type="text" id="amount_<?php echo $results['id']; ?>" class="form-control" value="2">
-                                                          <input type="hidden" id="days_<?php echo $results['id']; ?>" class="form-control" value="<?php echo $daysDifference;?>">
+                                                          <label class="form-label">Fine to be take for single day</label><input type="text" id="amount_2_<?php echo $results['id']; ?>" class="form-control" value="2">
+                                                          <input type="hidden" id="days_2_<?php echo $results['id']; ?>" class="form-control" value="<?php echo $daysDifference;?>">
                                                         </div> 
                                                       </div>
-                                                      <h6 class="font-weight-bolder mb-0 text-danger" id="result_<?php echo $results['id']; ?>"></h6>
+                                                      <h6 class="font-weight-bolder mb-0 text-danger" id="result_2_<?php echo $results['id']; ?>"></h6>
                                                       <div class="form-group mb-3">
-                                                      <button type="button" id="cala_<?php echo $results['id']; ?>" onclick="cal_<?php echo $results['id']; ?>()" class="btn btn-warning">Calculet</button>
+                                                      <button type="button" id="cala_<?php echo $results['id']; ?>" onclick="cal_2_<?php echo $results['id']; ?>()" class="btn btn-warning">Calculet</button>
                                                       <a type="button" id="update_<?php echo $results['id']; ?>" onclick="returned_<?php echo $results['id']; ?>()" class="btn btn-success hidden">update</a>
                                                       </div>
 
@@ -326,6 +334,14 @@
                                   </div>
 
                                   <script>
+                                     function cal_2_<?php echo $results['id']; ?>(){
+                                      var amount = $('#amount_2_<?php echo $results['id']; ?>').val();
+                                      var days = $('#days_2_<?php echo $results['id']; ?>').val();
+                                      document.getElementById("result_2_<?php echo $results['id']; ?>").innerText = "Fine: Rs. " + (amount*days);
+                                      document.getElementById("update_2_<?php echo $results['id']; ?>").classList.remove("hidden");
+                                      document.getElementById("cala_2_<?php echo $results['id']; ?>").classList.add("hidden");
+                                    }
+
                                     function cal_1_<?php echo $results['id']; ?>(){
                                       var amount = $('#amount_1_<?php echo $results['id']; ?>').val();
                                       var days = $('#days_1_<?php echo $results['id']; ?>').val();
@@ -395,10 +411,6 @@
                                           
                                       }
 
-
-                                      
-                                    
-                                    
                                       function returned_<?php echo $results['id']; ?>() {
                                             
                                             var book_id = <?php echo $results['id']; ?>;

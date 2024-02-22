@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Return Report
+  Search Records
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -34,11 +34,12 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
-  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>    
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>  
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
 
 </head>
 
@@ -79,7 +80,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="search_stud.php">
+          <a class="nav-link text-white  active bg-gradient-primary" href="search_stud.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <span class="material-symbols-outlined">search</span>
             </div>
@@ -95,7 +96,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="report_return.php">
+          <a class="nav-link text-white" href="report_return.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <span class="material-symbols-outlined">lab_profile</span>
             </div>
@@ -138,9 +139,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Return Report</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Search Records</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Return Report</h6>
+          <h6 class="font-weight-bolder mb-0">Search Records</h6>
         </nav>
       </div>
     </nav>
@@ -156,81 +157,52 @@
                   <div class="card">
                           <div class="card-body">
                               <div class="card-title">
-                                  <h3 class="text-center title-2">Books Returned by the Students</h3>
+                                  <h3 class="text-center title-2">Search Student's Record</h3>
                               </div>
+                              <hr>           
+
+                              <div class="input-group input-group-outline my-3">
+                                <label class="form-label">Search for Student</label>
+                                <input type="text" id="search_stud" class="form-control">
+                              </div>
+                              
+                              <div class="input-group input-group-outline my-3">
+                              <select size="4" class="form-control scrollable" id="Stud_search" name="student"></select>
+                                <!-- <select class="form-control" id="Stud_search" name="student"></select> -->
+                              </div>
+
+                              <Button onclick=response() class="btn bg-gradient-primary w-100" type="button">Search</Button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+<br>
+
+
+
+      <div class="section__content section__content--p30">
+        <div class="container-fluid">
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                          <div class="card-body">
+                              <!-- <div class="card-title">
+                                  <h3 class="text-center title-2">Books Returned by the Students</h3>
+                              </div> -->
                               <hr>
-                              <table class="table align-items-center mb-0">
+                              <table class="table align-items-center mb-0" id="mytable">
                                 <thead>
                                   <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Info</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Record ID</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Book Info</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dates</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delay</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fine</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                                  
-                                <?php
-                                  include ('../../includes/connection.php');
-                                  $ur = mysql_fetch_array(mysql_query("select * from admin_reg where email='".$_SESSION["user"]."'"));
-                                  $res = mysql_query("select * from issue where status='1'");
-                                  $id = 1;
-                                  while($row = mysql_fetch_array($res))
-                                  {
-                                    $book = mysql_query("select * from books where id = '".$row['book_id']."'");
-                                    $book1 = mysql_fetch_array($book);
-                                    $stud = mysql_query("select * from student where id = '".$row['stud_id']."'");
-                                    $stud1 = mysql_fetch_array($stud);
-
-                              ?>
-                                  <tr>
-                                    <td>
-                                      <p class="text-xs font-secondary mb-0"><b>Enrollment No.: </b><?php echo $stud1['enroll']; ?></p>
-                                      <p class="text-xs text-secondary mb-0"><b>Student Name: </b><?php echo $stud1['name']; ?></p>
-                                    </td>
-                                    <td>
-                                      <div class="d-flex px-2 py-1">
-                                        <div class="d-flex flex-column justify-content-center">
-                                          <h6 class="mb-0 text-sm"><?php echo $book1['name']; ?></h6>
-                                          <p class="text-xs text-secondary mb-0"><b>Book ID:</b> <?php echo $book1['id']; ?></p>
-                                          <p class="text-xs text-secondary mb-0"><b>Author:</b><?php echo $book1['author']; ?></p>
-                                        </div>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <p class="text-xs font-secondary mb-0"><b>Issue Date: </b><?php echo $row['issue_date']; ?></p>
-                                      <p class="text-xs text-secondary mb-0"><b>Due Date: </b><?php echo $row['due_date']; ?></p>
-                                      <p class="text-xs text-secondary mb-0"><b>Return Date: </b><?php echo $row['return_date']; ?></p>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                      <span class="text-secondary text-xs font-weight-bold">
-                                      <?php
-
-                                        $datetime1 = new DateTime($row['due_date']);
-                                        $datetime2 = new DateTime($row['return_date']);
-
-                                        if ($datetime2 >= $datetime1) {
-                                        $interval = $datetime1->diff($datetime2);
-                                        $daysDifference = max(0, $interval->days);
-                                        echo "<p class='text-danger text-sm font-weight-bold'>".$daysDifference . " Days<p>";
-                                      } else {
-                                        // $date2 has passed $date1, so the difference is 0
-                                        $daysDifference = 0;
-                                        echo "<p class='text-success text-sm font-weight-bold'>0 days<p>";
-                                    }
-
-                                    $fine = $daysDifference*$row['fine']
-                                        ?>
-                                    
-                                    </span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                      <span class="text-info text-xs font-weight-bold">Rs. <?php echo $fine; ?></span>
-                                    </td>
-                                  <?php
-                                  $id++; }
-                                      ?>
+                                <tbody id="roow">
                                 </tbody>
                               </table>
                           </div>
@@ -240,10 +212,14 @@
           </div>
       </div>
 
+
+
       <?php include('footer.php');?>
   </main>
 
-  <?php
+  
+<?php
+
 		if(isset($_POST['sign'])){
       session_destroy();
       
@@ -270,6 +246,73 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
+    
+    <script>
+
+    function response() {
+                document.getElementById("roow").innerHTML = "";
+
+                var searchText = $("#Stud_search").val();
+                if(searchText !== ''){
+                    $.ajax({
+                        url: '../sqloperations/get_records.php',
+                        method: 'post',
+                        data: {query: searchText},
+                        success: function(response){
+                            var books = response.split("~");
+                            var table = $("#records");
+                            table.empty(); // Clear previous options
+                            
+                            for (var j = 0; j < books.length-1; j++) {
+                                var bookInfo = books[j].split("|");
+                                if(bookInfo[6]=="1"){
+                                  var status ="<p class='text-success text-sm font-weight-bold'>Returned<p>";
+                                }else{
+                                  var status ="<p class='text-danger text-sm font-weight-bold'>Issued<p>";
+                                }
+                                document.getElementById("roow").innerHTML += "<tr><td>"+bookInfo[7]+"</td><td><div class='d-flex px-2 py-1'><div class='d-flex flex-column justify-content-center'><h6 class='mb-0 text-sm'>"+bookInfo[1]+"</h6><p class='text-xs text-secondary mb-0'><b>Book ID:</b>"+bookInfo[0]+"</p><p class='text-xs text-secondary mb-0'><b>Author:</b>"+bookInfo[2]+"</p></div></div></td><td><p class='text-xs font-secondary mb-0'><b>Issue Date: </b>"+bookInfo[3]+"</p><p class='text-xs text-secondary mb-0'><b>Due Date: </b>"+bookInfo[4]+"</p><p class='text-xs text-secondary mb-0'><b>Return Date: </b>"+bookInfo[5]+"</p></td><td>"+status+"</td></tr>";
+                            }
+                        }
+                    });
+                } else {
+                    $("#Stud_search").empty(); // Clear dropdown if no search text
+                }
+            }
+
+
+        
+        $(document).ready(function(){
+            $("#search_stud").on("keyup", function(){
+                var searchText = $(this).val();
+                if(searchText !== ''){
+                    $.ajax({
+                        url: '../sqloperations/search_stud.php',
+                        method: 'post',
+                        data: {query: searchText},
+                        success: function(response){
+                            var books = response.split("~");
+                            var dropdown = $("#Stud_search");
+                            dropdown.empty(); // Clear previous options
+                            
+                            for (var j = 0; j < books.length-1; j++) {
+                                var bookInfo = books[j].split("|");
+                                var title = bookInfo[2]; // Assuming the book title is the second part
+                                
+                                var option = $('<option/>', {
+                                    value: title,
+                                    text: bookInfo[1]+": "+bookInfo[0]
+                                });
+                                dropdown.append(option);
+                            }
+                        }
+                    });
+                } else {
+                    $("#Stud_search").empty(); // Clear dropdown if no search text
+                }
+            });
+        });
+
+    </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
