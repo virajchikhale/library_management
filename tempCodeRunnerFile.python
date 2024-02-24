@@ -1,4 +1,31 @@
-num = 65
-for i in range(3):
-    for i in range(3):
-        print(chr(num+i))
+class cricket():
+    def __init__(self, bat, ball, stump):
+        self.bat=bat
+        self.ball=ball
+        self.stump=stump
+        print(self.bat, self.ball, self.stump)
+
+    def players(self, num, role1, role2):
+        self.num=11
+        self.role1=role1
+        self.role2=role2
+        print(self.num, self.role1, self.role2)
+
+class countries(cricket):
+    def info(self, name, wc):
+        self.name= name
+        self.wc= 2
+        print(self.name, self.wc)
+
+class india(countries):
+    def play(self,best, finals):
+        self.best= 3
+        self.finals=7
+        print(self.best, self.finals)
+        
+aa = cricket(1,2,3)
+aa.players(11,"batsman" , "baller")
+# cc=india(ms, 7 )
+# cc.play()
+# cc.info()
+# cc.players()
