@@ -261,6 +261,7 @@
                                        <a data-toggle="modal" data-target="#returnModal_<?php echo $row['id'];?>" class="text-warning font-weight-bold text-xs" style="margin-left:40%;" data-toggle="tooltip" data-original-title="Edit user">
                                         <span class="material-symbols-outlined">laps</span>
                                       </a>
+                                    </td>
                                   </tr>
 
                                   <!-- update model -->

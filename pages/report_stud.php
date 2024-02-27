@@ -38,6 +38,11 @@
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </head>
 
@@ -174,6 +179,7 @@
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Year</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
                                     <th class="text-secondary opacity-7"></th>
+                                    <th class="text-secondary opacity-7"></th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -228,13 +234,103 @@
                                       } ?></span>
                                     </td>
                                     <td class="align-middle">
-                                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                      <a data-toggle="modal" data-target="#returnModal_<?php echo $row['id'];?>" class="text-info font-weight-bold text-xs" style="margin-left:40%;" data-toggle="tooltip" data-original-title="Edit user">
                                         Edit
+                                      </a>
+                                    </td>
+                                    <td class="align-middle">
+                                      <a data-toggle="modal" data-target="#delete_<?php echo $row['id'];?>" class="text-danger font-weight-bold text-xs" style="margin-left:40%;" data-toggle="tooltip" data-original-title="Edit user">
+                                        Delete
                                       </a>
                                     </td>
                                   </tr>
 
-                                <?php
+                                  <!-- update model -->
+                                  <div class="modal fade" id="returnModal_<?php echo $row['id'];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                      
+                                      <?php  $query1="SELECT * FROM student where id='".$row['id']."' ";
+                                          $query_run2=mysql_query($query1);
+                                          $results = mysql_fetch_array($query_run2);
+                                          //echo $results['keyword']; 
+                                          // echo $results['question']; 					  
+                                      ?>
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h5 class="modal-title" id="exampleModalLongTitle">Edit Student Info</h5>
+                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                              </div>
+                                          
+                                              <div class="modal-body">
+                                                <form  method="POST" enctype="multipart/form-data">
+                                        
+                                                    <div class="form-group mb-3">
+                                                    <label for="">ID: <?php echo $results['id']; ?></label><br>
+                                                    <label for="">Roll No.</label><input type="text" name="roll" class="form-control" value="<?php echo $results['roll']; ?>">
+                                                    <label for="">Enrollment No.</label><input type="text" name="enroll" class="form-control" value="<?php echo $results['enroll']; ?>">
+                                                    <label for="">Name</label><input type="text" name="name" class="form-control" value="<?php echo $results['name']; ?>">
+                                                    <label for="">Phone Number</label><input type="text" name="phone" class="form-control" value="<?php echo $results['phone']; ?>">
+                                                    <label for="">Email</label><input type="email" name="email" class="form-control" value="<?php echo $results['email']; ?>">
+
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                    <button type="submit" name="update_<?php echo $row['id']; ?>" class="btn btn-success">update</button>
+                                                    </div>
+
+                                                </form>
+                                              </div> 
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <?php if(isset($_POST['update_'.$row['id']]))
+                                    {		
+                                    $roll=$_POST['roll'];
+                                    $enroll=$_POST['enroll'];
+                                    $name=$_POST['name'];
+                                    $phone=$_POST['phone'];
+                                    $email=$_POST['email'];
+
+                        
+                                        $que="UPDATE `student` SET `roll`='".$roll."',`enroll`='".$enroll."' ,`name`='".$name."',`phone`='".$phone."' ,`email`='".$email."'  WHERE id='".$row['id']."'" ;
+                                        mysql_query($que);
+                                        
+                                        echo "<script> alert('Updated Successfully....');</script>";
+                                        echo '<script>window.location.href="report_stud.php";</script>';
+                                    }?>
+
+
+                                    <div class="modal fade" id="delete_<?php echo $row['id'];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-danger" id="exampleModalLongTitle" style="text-align: center;font-size: 25px;">DELETE</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure want to delete this Student......? </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <form  method="POST" enctype="multipart/form-data">
+                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                                            <button type="submit" name="delete_<?php echo $row['id']; ?>" class="btn btn-success">Delete</button>
+                                        </form>
+                                        </div>
+                                    </div>
+                                      </div>
+                                  </div>
+                                  
+                                      <?php if(isset($_POST['delete_'.$row['id']]))
+                                    {		 
+                                      $que = "delete from student where id = '".$row['id']."' ";
+                                    mysql_query($que);
+                                              echo "<script> alert('Deleted Successfully....');</script>";
+                                    echo '<script>window.location.href="report_stud.php";</script>';
+                                  }
                                   $id++; }
                                     ?>
                                 </tbody>
