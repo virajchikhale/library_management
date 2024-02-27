@@ -86,6 +86,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-white" href="report_dept.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <span class="material-symbols-outlined">lab_profile</span>
+            </div>
+            <span class="nav-link-text ms-1">Department Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-white" href="report_issue.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <span class="material-symbols-outlined">lab_profile</span>
@@ -179,10 +187,13 @@
                                   <div class="input-group input-group-outline my-3">
                                     <select class="form-control" id="department" name="department" onchange=selectnone(this.id)>
                                         <option value="none">Select Your Department</option>
-                                        <option value="1">Computer</option>
-                                        <option value="2">IT</option>
-                                        <option value="3">EnTc</option>
-                                        <option value="4">Ele</option>
+                                        <option value="1">Electronics and Telecommunication</option>
+                                        <option value="2">Computer</option>
+                                        <option value="3">Information Technology</option>
+                                        <option value="4">Electrical</option>
+                                        <option value="5">Civil</option>
+                                        <option value="6">Mechanical</option>
+                                        <option value="7">Automobile</option>
                                     </select>
                                   </div>
                                   <div class="input-group input-group-outline my-3">

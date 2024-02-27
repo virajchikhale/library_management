@@ -98,6 +98,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-white" href="report_dept.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <span class="material-symbols-outlined">lab_profile</span>
+            </div>
+            <span class="nav-link-text ms-1">Department Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-white active bg-gradient-primary" href="report_issue.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <span class="material-symbols-outlined">lab_profile</span>
@@ -285,8 +293,8 @@
                                                       </div>
                                                       <h6 class="font-weight-bolder mb-0 text-danger" id="result_2_<?php echo $results['id']; ?>"></h6>
                                                       <div class="form-group mb-3">
-                                                      <button type="button" id="cala_<?php echo $results['id']; ?>" onclick="cal_2_<?php echo $results['id']; ?>()" class="btn btn-warning">Calculet</button>
-                                                      <a type="button" id="update_<?php echo $results['id']; ?>" onclick="returned_<?php echo $results['id']; ?>()" class="btn btn-success hidden">update</a>
+                                                      <button type="button" id="cala_2_<?php echo $results['id']; ?>" onclick="cal_2_<?php echo $results['id']; ?>()" class="btn btn-warning">Calculet</button>
+                                                      <a type="button" id="update_2_<?php echo $results['id']; ?>" onclick="returned_<?php echo $results['id']; ?>()" class="btn btn-success hidden">update</a>
                                                       </div>
 
                                                   </form>
