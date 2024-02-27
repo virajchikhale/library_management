@@ -182,7 +182,8 @@
                                 <thead>
                                   <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deparment</th>
-                                    <th class="text-left text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Count of Books</th>
+                                    <th class="text-left text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Year</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Count of Books</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -192,13 +193,27 @@
                                   $ur = mysql_fetch_array(mysql_query("select * from admin_reg where email='".$_SESSION["user"]."'"));
                                   $res = mysql_query("select * from issue where status='0'");
                                   $id = 1;
-                                  $en=0;
-                                  $cs=0;
-                                  $it=0;
-                                  $el=0;
-                                  $cv=0;
-                                  $me=0;
-                                  $au=0;
+                                  $en_1=0;
+                                  $en_2=0;
+                                  $en_3=0;
+                                  $cs_1=0;
+                                  $cs_2=0;
+                                  $cs_3=0;
+                                  $it_1=0;
+                                  $it_2=0;
+                                  $it_3=0;
+                                  $el_1=0;
+                                  $el_2=0;
+                                  $el_3=0;
+                                  $cv_1=0;
+                                  $cv_2=0;
+                                  $cv_3=0;
+                                  $me_1=0;
+                                  $me_2=0;
+                                  $me_3=0;
+                                  $au_1=0;
+                                  $au_2=0;
+                                  $au_3=0;
                                   while($row = mysql_fetch_array($res))
                                   {
                                     $book = mysql_query("select * from books where id = '".$row['book_id']."'");
@@ -206,21 +221,49 @@
                                     $stud = mysql_query("select * from student where id = '".$row['stud_id']."'");
                                     $stud1 = mysql_fetch_array($stud);
                                     $department=$stud1['department'];
-                                    // echo $department;
-                                    if($department==1){
-                                      $en=$en+1;
-                                    }else if($stud1['department']==2){
-                                      $cs=$cs+1;
-                                    }else if($stud1['department']==3){
-                                      $it=$it+1;
-                                    }else if($stud1['department']==4){
-                                      $el=$el+1;
-                                    }else if($stud1['department']==5){
-                                      $cv=$cv+1;
-                                    }else if($stud1['department']==6){
-                                      $me=$me+1;
-                                    }else if($stud1['department']==7){
-                                      $au=$au+1;
+                                    $year=$stud1['year'];
+                                    if($department==1 && $year==1){
+                                      $en_1=$en_1+1;
+                                    }else if($department==1 && $year==2){
+                                      $en_2=$en_2+1;
+                                    }else if($department==1 && $year==3){
+                                      $en_3=$en_3+1;
+                                    }else if($department==2 && $year==1){
+                                      $cs_1=$cs_1+1;
+                                    }else if($department==2 && $year==2){
+                                      $cs_2=$cs_2+1;
+                                    }else if($department==2 && $year==3){
+                                      $cs_3=$cs_3+1;
+                                    }else if($department==3 && $year==1){
+                                      $it_1=$it_1+1;
+                                    }else if($department==3 && $year==2){
+                                      $it_2=$it_2+1;
+                                    }else if($department==3 && $year==3){
+                                      $it_3=$it_3+1;
+                                    }else if($department==4 && $year==1){
+                                      $el_1=$el_1+1;
+                                    }else if($department==4 && $year==2){
+                                      $el_2=$el_2+1;
+                                    }else if($department==4 && $year==3){
+                                      $el_3=$el_3+1;
+                                    }else if($department==5 && $year==1){
+                                      $cv_1=$cv_1+1;
+                                    }else if($department==5 && $year==2){
+                                      $cv_2=$cv_2+1;
+                                    }else if($department==5 && $year==3){
+                                      $cv_3=$cv_3+1;
+                                    }else if($department==6 && $year==1){
+                                      $me_1=$me_1+1;
+                                    }else if($department==6 && $year==2){
+                                      $me_2=$me_2+1;
+                                    }else if($department==6 && $year==3){
+                                      $me_3=$me_3+1;
+                                    }else if($department==7 && $year==1){
+                                      $au_1=$au_1+1;
+                                    }else if($department==7 && $year==2){
+                                      $au_2=$au_2+1;
+                                    }else if($department==7 && $year==3){
+                                      $au_3=$au_3+1;
                                     }
 
                                     $id++; } 
@@ -232,7 +275,32 @@
                                       Electrnics and Telecommunication
                                     </td>
                                     <td>
-                                      <?php echo $el;?>
+                                      First Year
+                                    </td>
+                                    <td>
+                                      <?php echo $en_1;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Electrnics and Telecommunication
+                                    </td>
+                                    <td>
+                                      Second Year
+                                    </td>
+                                    <td>
+                                      <?php echo $en_2;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Electrnics and Telecommunication
+                                    </td>
+                                    <td>
+                                      Third Year
+                                    </td>
+                                    <td>
+                                      <?php echo $en_3;?>
                                     </td>
                                   </tr>
                                   <tr>
@@ -240,7 +308,32 @@
                                       Computer
                                     </td>
                                     <td>
-                                      <?php echo $cs;?>
+                                      First Year
+                                    </td>
+                                    <td>
+                                      <?php echo $cs_1;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Computer
+                                    </td>
+                                    <td>
+                                      Second Year
+                                    </td>
+                                    <td>
+                                      <?php echo $cs_2;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Computer
+                                    </td>
+                                    <td>
+                                      Third Year
+                                    </td>
+                                    <td>
+                                      <?php echo $cs_3;?>
                                     </td>
                                   </tr>
                                   <tr>
@@ -248,7 +341,32 @@
                                       Information Technology
                                     </td>
                                     <td>
-                                      <?php echo $it;?>
+                                      First Year
+                                    </td>
+                                    <td>
+                                      <?php echo $it_1;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Information Technology
+                                    </td>
+                                    <td>
+                                      Second Year
+                                    </td>
+                                    <td>
+                                      <?php echo $it_2;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Information Technology
+                                    </td>
+                                    <td>
+                                      Third Year
+                                    </td>
+                                    <td>
+                                      <?php echo $it_3;?>
                                     </td>
                                   </tr>
                                   <tr>
@@ -256,7 +374,32 @@
                                       Electronics
                                     </td>
                                     <td>
-                                      <?php echo $el;?>
+                                      First Year
+                                    </td>
+                                    <td>
+                                      <?php echo $el_1;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Electronics
+                                    </td>
+                                    <td>
+                                      Second Year
+                                    </td>
+                                    <td>
+                                      <?php echo $el_2;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Electronics
+                                    </td>
+                                    <td>
+                                      Third Year
+                                    </td>
+                                    <td>
+                                      <?php echo $el_3;?>
                                     </td>
                                   </tr>
                                   <tr>
@@ -264,7 +407,32 @@
                                       Civil
                                     </td>
                                     <td>
-                                      <?php echo $cv;?>
+                                      First Year
+                                    </td>
+                                    <td>
+                                      <?php echo $cv_1;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Civil
+                                    </td>
+                                    <td>
+                                      Second Year
+                                    </td>
+                                    <td>
+                                      <?php echo $cv_2;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Civil
+                                    </td>
+                                    <td>
+                                      Third Year
+                                    </td>
+                                    <td>
+                                      <?php echo $cv_3;?>
                                     </td>
                                   </tr>
                                   <tr>
@@ -272,7 +440,32 @@
                                       Mechanical
                                     </td>
                                     <td>
-                                      <?php echo $me;?>
+                                      First Year
+                                    </td>
+                                    <td>
+                                      <?php echo $me_1;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Mechanical
+                                    </td>
+                                    <td>
+                                      Second Year
+                                    </td>
+                                    <td>
+                                      <?php echo $me_2;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Mechanical
+                                    </td>
+                                    <td>
+                                      Third Year
+                                    </td>
+                                    <td>
+                                      <?php echo $me_3;?>
                                     </td>
                                   </tr>
                                   <tr>
@@ -280,7 +473,32 @@
                                       Automobile
                                     </td>
                                     <td>
-                                      <?php echo $au;?>
+                                      First Year
+                                    </td>
+                                    <td>
+                                      <?php echo $au_1;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Automobile
+                                    </td>
+                                    <td>
+                                      Second Year
+                                    </td>
+                                    <td>
+                                      <?php echo $au_2;?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Automobile
+                                    </td>
+                                    <td>
+                                      Third Year
+                                    </td>
+                                    <td>
+                                      <?php echo $au_3;?>
                                     </td>
                                   </tr>
                                 </tbody>
