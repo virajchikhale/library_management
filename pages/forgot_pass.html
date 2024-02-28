@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    Forgot Password
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
+  <!-- Nepcha Analytics (nepcha.com) -->
+  <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
+  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+</head>
+
+<body class="bg-gray-200" onload=disable()>
+  <main class="main-content  mt-0">
+    <div class="page-header align-items-start min-vh-100" style="background-image: url('../assets/img/illustrations/lib2.jpg');">
+      <span class="mask bg-gradient-dark opacity-6"></span>
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-4 col-md-8 col-12 mx-auto">
+            <div class="card z-index-0 fadeIn3 fadeInBottom">
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Forgot Password</h4>
+                </div>
+              </div>
+              <div class="card-body">
+                <form role="form" class="text-start">
+                  <div id="email_box" class="input-group input-group-outline my-3">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="text"  onchange=emailvalid(this.value)  name="email" id="email">
+                  </div>
+
+                  <div id="otp" class="input-group input-group-outline my-3">
+                    <label class="form-label">Enter OTP</label>
+                    <input class="form-control" type="number" name="otp"  onkeyup=otp1() onchange=aaaa() id="otpin">
+                  </div>
+
+
+                  
+                  <p class="mt-1 text-sm text-left">
+                    <a href="../pages/sign-up.html" class="text-primary text-gradient">Forgot Password?</a>
+                  </p>
+                  <div class="text-center">
+                    <button type="button"  onclick=response() class="btn bg-gradient-primary w-100 my-2 mb-2">Sign in</button>
+                  </div>
+                  <p class="mt-4 text-sm text-center">
+                    Don't have an account?
+                    <a href="../pages/sign-up.html" class="text-primary text-gradient font-weight-bold">Sign up</a>
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!--   Core JS Files   --><script >
+
+		
+		function disable() {
+      alert("hii");
+			// var x = document.getElementById("alert");
+			// x.style.display = "none";
+
+			// var x = document.getElementById("otp");
+			// x.style.display = "none";
+
+			// var y = document.getElementById("pass");
+			// y.style.display = "none";
+
+			// var z = document.getElementById("cpass");
+			// z.style.display = "none";
+
+			// var b = document.getElementById("submit");
+			// b.style.display = "none";
+		}
+
+		// function passvalid() {
+		// 	var pass = $('#password').val();
+
+		// 	//alert(pass.length);
+		// 	var len = pass.length;
+		// 	//alert(len);
+		// 	if(len < 8){
+		// 		alert('Password must be atleast of 8 charechters');
+		// 		$('#password').val('');
+		// 		$('#password').focus();
+		// 	}  
+		// }
+
+
+		// function passcon() {
+		// 	var pass = $('#password').val();
+		// 	var cpass = $('#cpassword').val();
+
+		// 	if(pass != cpass){
+		// 		alert('Password Mismatched please try agian');
+		// 		$('#cpassword').val('');
+		// 		$('#cpassword').focus();
+		// 	}  
+			
+		// 	var b = document.getElementById("submit");
+		// 	b.style.display = "block";
+		// }
+
+		// function emailvalid(str) {
+		// 	var email = str;
+		// 	//  alert(email)
+		// 	$.ajax({
+		// 		type:'POST',
+		// 		url:'../validation/emailvalid.php',
+		// 		data:{email:email,
+		// 			type:'forgot',
+		// 			table:'teacher_reg'
+		// 		},
+		// 		success:function(return_data) {
+		// 		//alert(return_data);
+		// 		if(return_data == "1"){
+		// 			alert('This Email does not exist in system');
+		// 			$('#email').val('');
+		// 			$('#email').focus();
+		// 		}  else{
+		// 				// alert(return_data);
+		// 				var xmlhttp = new XMLHttpRequest();
+		// 				xmlhttp.onreadystatechange = function() {
+		// 				}
+		// 				xmlhttp.open("GET", "../email/email_base.php?q="+email+"&otp="+return_data+"&type=forgot_otp&position=teacher", true);
+		// 				xmlhttp.send();
+		// 				// alert(return_data);
+		// 				alert('We have sent OTP to '+email);
+		// 				otp = return_data;
+						
+		// 				var x = document.getElementById("otp");
+		// 				x.style.display = "block";
+						
+		// 				//alert(otp);
+		// 		} 
+		// 		}
+		// 	});
+		// 	}
+
+
+			// function otp1() {
+			// var raw = $('#otpin').val();
+			// var otp1 = raw.trim();
+			// //alert(window.otp);
+			// //alert(otp1);
+			// //alert(len);
+			// 	if(otp1 == otp){
+
+
+			// 		var y = document.getElementById("pass");
+			// 		y.style.display = "block";
+
+			// 		var z = document.getElementById("cpass");
+			// 		z.style.display = "block";
+			// 	}
+			// }
+
+			// function aaaa() {
+			// var raw = $('#otpin').val();
+			// var otp1 = raw.trim();
+			// //alert(window.otp);
+			// //alert(otp1);
+			// //alert(len);
+			// 	if(otp1 !== otp){
+			// 		alert('Plese enter valid OTP');
+			// 		$('#otp').val('');
+			// 		$('#otp').focus();
+			// 	}  else{
+			// 		var a = document.getElementById("email");
+			// 		a.disable = true;
+			// 		var x = document.getElementById("otp");
+			// 		x.style.display = "none";
+
+			// 		var y = document.getElementById("pass");
+			// 		y.style.display = "block";
+
+			// 		var z = document.getElementById("cpass");
+			// 		z.style.display = "block";
+			// 	}
+			// }
+
+	// 	function response() {
+  //       var email = $('#email').val();
+  //       var password = $('#password').val();
+	// 	var	table='teacher_reg';
+	// 	//alert(password);
+	// 	$.ajax({
+  //       type:'POST',
+  //       url:'../sqloperations/update_reg.php',
+  //       data:{email:email,
+	// 		password:password,
+	// 		table:table
+	// 	},
+  //       success:function(return_data) {
+  //       // alert(return_data);
+  //     if(return_data == "1"){
+  //       alert('Someting went wrong!!!');
+  //     }  else{
+  //       var xmlhttp = new XMLHttpRequest();
+  //       xmlhttp.onreadystatechange = function() {
+  //           }
+  //           xmlhttp.open('GET', '../email/email_base.php?q='+email+'&type=pass_change_alert&position=teacher', true);
+  //           xmlhttp.send(); 
+  //           alert('Password Updated Successfully....');
+  //           window.location.href='../login/teacher_login.php';
+  //     } 
+  //   }
+  //     });
+	// }
+	</script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+	<script src="../includes/js/jquery-3.3.1.min.js"></script>
+	<script src="../includes/js/jquery.steps.js"></script>
+	<script src="../includes/js/main_steps.js"></script>
+	<script src="../includes/js/validation.js"></script>
+</body>
+
+</html>

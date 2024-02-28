@@ -252,7 +252,7 @@ include('../includes/connection.php');
       mysql_query($sqlinsert);
       
       echo "<script> alert('Signed Up Successfully....'); </script>";
-      echo "<script> window.location.href='add_student.php'; </script>";
+      echo "<script> window.location.href='add_stud.php'; </script>";
                   
 		}
 ?>
