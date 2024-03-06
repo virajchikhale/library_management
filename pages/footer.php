@@ -9,8 +9,8 @@
                   document.write(new Date().getFullYear())
                 </script>,
                 made by
-                <a href="https://www.codelikho.in" class="font-weight-bold" target="_blank">Code Likho</a>
-                for a better web.
+                <a href="https://www.codelikho.in" class="font-weight-bold" target="_blank">GPA</a>
+                for a better web.All rights are reserved @2024
               </div>
             </div>
             <!-- <div class="col-lg-6">
