@@ -186,14 +186,13 @@
                                 <select class="form-control" id="Stud_search" name="student"></select>
                               </div>
 
-                              
+                              <label class="form-label">Issue Date</label>
                               <div class="input-group input-group-outline my-3">
-                                <label class="form-label">Issue Date</label>
-                                <input type="date" name="date" id="date" class="form-control">
+                                <input type="date" name="date" id="date" class="form-control" disabled>
                               </div>
 
+                              <label class="form-label">Duration</label>
                               <div class="input-group input-group-outline my-3">
-                                <label class="form-label">Duration</label>
                                 <input type="number" name="duration" id="duration" class="form-control" value = 7 >
                               </div>
                               <Button onclick=response() class="btn bg-gradient-primary w-100" type="button">Issue</Button>
@@ -226,7 +225,14 @@
   <script src="../assets/js/plugins/chartjs.min.js"></script>
   
   <script src="vendor/jquery-3.2.1.min.js"></script>
+  
   <script>
+
+var date = new Date();
+var currentDate = date.toISOString().substring(0,10);
+
+document.getElementById('date').value = currentDate;
+
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -278,7 +284,7 @@
         success:function(return_data) {
 			// alert(return_data);
           if(return_data == "1"){
-            alert('Someting went wrong!!!');
+            alert('Book not available');
           }  else{
 				alert('Book Issued....');
         window.location.href="issue_book.php";

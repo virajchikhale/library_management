@@ -5,6 +5,13 @@
     echo "<script> alert('Please login....');</script>";
     echo '<script>window.location.href="sign-in.html";</script>';
   }
+  
+if(isset($_POST['Submit'])){
+  $en_no = $_POST['en_no'];
+    echo $en_no;
+//     echo $t_date;
+//     echo $year;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -165,7 +172,11 @@
     </nav>
     <!-- End Navbar -->
 
+    <?php
     
+    $ur = mysql_fetch_array(mysql_query("select * from admin_reg where email='".$_SESSION["user"]."'"));                                  
+    $stud = mysql_fetch_array(mysql_query("select * from student where enroll='".$en_no."'"));
+    ?>
 
     <div class="section__content section__content--p30">
       <div class="container-fluid">
@@ -173,19 +184,12 @@
               <div class="col-lg-12">
                   <div class="card">
                           <div class="card-body">
-                            <form method="POST" action="searched_record.php">
                               <div class="card-title">
-                                  <h3 class="text-center title-2">Search Student's Record</h3>
+                                  <h3 class="text-center title-2">Record Student</h3>
+                                      <h6 class="text-center title-2"><b>Enrollment No.: </b><?php echo $stud['enroll']; ?></h6>
+                                      <h6 class="text-center title-2"><b>Student Name: </b><?php echo $stud['name']; ?></h6>
                               </div>
-                              <hr>           
-
-                              <div class="input-group input-group-outline my-3">
-                                <label class="form-label">Enter Enrollment No.</label>
-                                <input type="text" id="en_no" name="en_no" class="form-control">
-                              </div>
-
-                              <Button class="btn bg-gradient-primary w-100" type="Submit" name="Submit">Search</Button>
-                            </form>
+                              <hr>     
                           </div>
                       </div>
                   </div>
@@ -208,7 +212,6 @@
                                 <thead>
                                   <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Record ID</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Info</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Book Info</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dates</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delay</th>
@@ -221,8 +224,8 @@
                                   
                                 <?php
                                   include ('../../includes/connection.php');
-                                  $ur = mysql_fetch_array(mysql_query("select * from admin_reg where email='".$_SESSION["user"]."'"));
-                                  $res = mysql_query("select * from issue where status='0'");
+
+                                  $res = mysql_query("select * from issue where status='0' && stud_id = '".$stud['id']."'");
                                   $id = 1;
                                   while($row = mysql_fetch_array($res))
                                   {
@@ -235,10 +238,6 @@
                                   <tr>
                                     <td>
                                       <p class="text-xs font-secondary mb-0"><?php echo $row['id']; ?></p>
-                                    </td>
-                                    <td>
-                                      <p class="text-xs font-secondary mb-0"><b>Enrollment No.: </b><?php echo $stud1['enroll']; ?></p>
-                                      <p class="text-xs text-secondary mb-0"><b>Student Name: </b><?php echo $stud1['name']; ?></p>
                                     </td>
                                     <td>
                                       <div class="d-flex px-2 py-1">
