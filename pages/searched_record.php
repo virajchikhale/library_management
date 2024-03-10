@@ -8,7 +8,7 @@
   
 if(isset($_POST['Submit'])){
   $en_no = $_POST['en_no'];
-    echo $en_no;
+    // echo $en_no;
 //     echo $t_date;
 //     echo $year;
 }

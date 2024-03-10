@@ -154,6 +154,42 @@
     <!-- End Navbar -->
 
     
+    <div class="section__content section__content--p30">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                          <div class="card-body">
+                            <form method="POST" action="searched_book.php">
+                              <div class="card-title">
+                                  <h3 class="text-center title-2">Search Books Departmentwise</h3>
+                              </div>
+                              <hr>           
+
+                              <div class="input-group input-group-outline my-3">
+                                    <select class="form-control" id="department" name="department" onchange=selectnone(this.id)>
+                                        <option value="none">Select Book Department</option>
+                                        <option value="1">Electronics and Telecommunication</option>
+                                        <option value="2">Computer</option>
+                                        <option value="3">Information Technology</option>
+                                        <option value="4">Electrical</option>
+                                        <option value="5">Civil</option>
+                                        <option value="6">Mechanical</option>
+                                        <option value="7">Automobile</option>
+                                    </select>
+                              </div>
+
+                              <Button class="btn bg-gradient-primary w-100" type="Submit" name="Submit">Search</Button>
+                            </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <br>
+
+    
 
     
     <div class="section__content section__content--p30">
@@ -169,8 +205,10 @@
                               <table class="table align-items-center mb-0">
                                 <thead>
                                   <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unique Code</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Book</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Details</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deparment</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Books</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Available Books</th>
                                     <th class="text-secondary opacity-7"></th>
@@ -181,12 +219,19 @@
                                 <?php
                                   include ('../../includes/connection.php');
                                   $ur = mysql_fetch_array(mysql_query("select * from admin_reg where email='".$_SESSION["user"]."'"));
-                                  $res = mysql_query("select * from books");
+                                  $res = mysql_query("select * from books ORDER BY name");
                                   $id = 1;
                                   while($row = mysql_fetch_array($res))
                                   {
                               ?>
                                   <tr>
+                                    <td>
+                                      <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                          <h6 class="mb-0 text-sm"><?php echo $row['u_code']; ?></h6>
+                                        </div>
+                                      </div>
+                                    </td>
                                     <td>
                                       <div class="d-flex px-2 py-1">
                                         <div class="d-flex flex-column justify-content-center">
@@ -199,6 +244,9 @@
                                     <td>
                                       <p class="text-xs font-secondary mb-0"><b>Author:</b><?php echo $row['author']; ?></p>
                                       <p class="text-xs text-secondary mb-0"><b>Category :</b><?php echo $row['category']; ?></p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                      <?php echo $row['department_id']; ?>
                                     </td>
                                     <td class="align-middle text-center">
                                       <span class="text-secondary text-xs font-weight-bold"><?php echo $row['total_copies']; ?></span>
