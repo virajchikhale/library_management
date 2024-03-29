@@ -193,7 +193,12 @@
 
                               <label class="form-label">Duration</label>
                               <div class="input-group input-group-outline my-3">
-                                <input type="number" name="duration" id="duration" class="form-control" value = 7 >
+                                <input type="number" onchange=new_date() name="duration" id="duration" class="form-control" value = 7 >
+                              </div>
+
+                              <label class="form-label">Return Date</label>
+                              <div class="input-group input-group-outline my-3">
+                                <p name="r_date" id="r_date" class="form-control" disabled>
                               </div>
                               <Button onclick=response() class="btn bg-gradient-primary w-100" type="button">Issue</Button>
                           </div>
@@ -243,6 +248,8 @@ document.getElementById('date').value = currentDate;
   </script>
     
     <script>
+      new_date()
+      
 
       function addDaysToDate(inputDateString, daysToAdd) {
           // Convert input string to Date object
@@ -257,6 +264,24 @@ document.getElementById('date').value = currentDate;
           var day = ('0' + inputDate.getDate()).slice(-2);
 
           return year + '-' + month + '-' + day;
+      }
+
+      
+      function new_date() {
+        
+          var issue_date = $('#date').val();
+          var duration = parseInt($('#duration').val());
+          // Convert input string to Date object
+          var inputDate = new Date(issue_date);
+
+          inputDate.setDate(inputDate.getDate() + duration);
+
+          // Format the result as "YYYY-MM-DD"
+          var year = inputDate.getFullYear();
+          var month = ('0' + (inputDate.getMonth() + 1)).slice(-2);
+          var day = ('0' + inputDate.getDate()).slice(-2);
+
+          document.getElementById("r_date").innerHTML = year + '-' + month + '-' + day;
       }
 
 

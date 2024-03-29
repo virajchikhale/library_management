@@ -205,7 +205,7 @@
                   <div class="card">
                           <div class="card-body">
                               <div class="card-title">
-                                  <h3 class="text-center title-2">Books Present in the <?php echo $department;?></h3>
+                                  <h3 class="text-center title-2">Books Present in the Selected Department</h3>
                               </div>
                               <hr>
                               <table class="table align-items-center mb-0">
