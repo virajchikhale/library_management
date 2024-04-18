@@ -344,7 +344,7 @@
                                       ?>
                                           <div class="modal-content">
                                               <div class="modal-header">
-                                                  <h5 class="modal-title" id="exampleModalLongTitle">Book To Be Returned</h5>
+                                                  <h5 class="modal-title" id="exampleModalLongTitle">Book To Be Renewed</h5>
                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                           <span aria-hidden="true">&times;</span>
                                                       </button>
@@ -406,7 +406,7 @@
                                             var issue_date = formattedDate;
                                             var duration = 7;
                                             var due_date = addDaysToDate(issue_date, duration);
-                                            var amount = $('#amount_<?php echo $results['id']; ?>').val();
+                                            var amount = $('#amount_1_<?php echo $results['id']; ?>').val();
                                             // alert(issue_date);
                                             // alert(due_date);
 
@@ -454,7 +454,7 @@
                                             
                                             var book_id = <?php echo $results['id']; ?>;
                                             var book = <?php echo $results['book_id']; ?>;
-                                            var amount = $('#amount_<?php echo $results['id']; ?>').val();
+                                            var amount = $('#amount_2_<?php echo $results['id']; ?>').val();
                                             // alert(book_id);
                                             // alert(date);
 
